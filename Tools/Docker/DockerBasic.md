@@ -1,6 +1,12 @@
 ## Docker 명령어 및 Docker File 만들기
 당면 목표는 Docker File로 현 작업에 필요한 Docker Image를 생성하는 것. 그 중 첫 문서는 도커의 기본 명령어들을 다룬다.
 
+## 간단한 요약
++ tar파일, images, 컨테이너, 세 개를 관리하면 된다.
++ tar파일 상태의 image는 서버에 로드하기위한 세이브 파일로 생각하면 된다. tar로 묶어 저장하고, load하고싶은 서버로 옮긴다.
++ image 상태는 서버에 로드된 상태로 기동은 안된 docker라 생각하면 편하다.
++ 컨테이너는 image가 실제 기동된 것을 의미한다. 컨테이너가 기동된 상태에선 exec을 통해 해당 docker로 접속할 수 있다.
+
 ## 조회
 #### docker images
 + 관리 중인 docker image들을 보는 명령어
@@ -15,7 +21,7 @@ mic_ems00_aside     20200424            c013dacd4fe1        3 days ago          
 + Image를 대상으론 save를 통한 tar파일화, run을 통한 기동 등을 할 수 있으며 save된 tar를 image로 load할 수 있다.
 
 #### docker ps
-+ 현재 기동 중인 docker image들을 보는 명령어
++ 현재 기동 중인 docker 컨테이너들을 보는 명령어
 ```
 [root@local:/root] docker ps
 CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS              PORTS               NAMES
@@ -58,16 +64,30 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 ```
 
 ## Image 관리
+#### docker commit
++ 현재 구동 중인 도커 컨테이너의 상태를 이미지화 하기 위한 명령어.
 #### docker save
-
++ 도커 이미지를 tar 파일로 저장하기 위한 명령어.
++ ```-o``` 옵션은 tar파일의 이름을 지정하기 위해 사용된다.
+```
+[root@obxepc-Svr-host00b:/root]$ docker save -o src_ems00b.tar svr_ems00_bside:20190220
+```
 #### docker load
-
++ tar파일로 저장된 이미지를 서버에 로드하기 위한 명령어
++ ```-i```옵션은 load할 파일 명을 명시하기 위해 사용된다.
+```
+[root@obxepc-Svr-host00b:/root]$ docker load -i src_ems00b.tar
+```
 #### docker run
++ load된 이미지를 실제로 실행시키는 명령어. 여기서 옵션이 상당히 많아진다.
 
 ## 구동 중인 Docker의 관리
 
 #### docker exec
++ 구동중인 도커에 접속하기 위한 명령어.
+```
 
+```
 #### docker stop
 
 #### docker restart
